@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useMusica from "./useMusica";
+import { ScreenContext } from "../context/ScreenContext";
 
 type UseMusica = {
   musica: boolean;
@@ -18,19 +19,18 @@ type UseCronometro = {
   musica: UseMusica;
 };
 
-const concentrar: number = 3;
-const descanzar: number = 2;
 const delay: number = 1;
 
 export default function usePomodoro(
-  postConcentracion: () => void,
-  postDescanzo: () => void,
-  completado: () => void
+  tiempos: { concentracion: number; descanzo: number },
+  screen: ScreenContext
 ): UseCronometro {
   const [iniciarC, setIniciarC] = useState<boolean>(false);
   const [iniciarD, setIniciarD] = useState<boolean>(false);
-  const [concentracion, setConcentracion] = useState<number>(concentrar);
-  const [descanzo, setDescanzo] = useState<number>(descanzar);
+  const [concentracion, setConcentracion] = useState<number>(
+    tiempos.concentracion
+  );
+  const [descanzo, setDescanzo] = useState<number>(tiempos.descanzo);
   const [intervalo, setIntervalo] = useState<number>(2);
   const musica = useMusica();
 
@@ -45,8 +45,8 @@ export default function usePomodoro(
   const reiniciar = (): void => {
     setIniciarC(false);
     setIniciarD(false);
-    setConcentracion(concentrar);
-    setDescanzo(descanzar);
+    setConcentracion(tiempos.concentracion);
+    setDescanzo(tiempos.descanzo);
   };
 
   const reiniciarTodo = (): void => {
@@ -67,17 +67,17 @@ export default function usePomodoro(
   useEffect(() => {
     if (!iniciarC || !intervalo) return;
     if (!concentracion && !iniciarD) {
-      postConcentracion();
+      screen.alarmaPausa();
       pararMusica();
       return;
     }
     if (!descanzo) {
       if (!(intervalo - 1)) {
-        completado();
+        screen.mostrarCompletado();
         reiniciarTodo();
         return;
       }
-      postDescanzo();
+      screen.alarmaConcent();
       reiniciar();
       setIntervalo((prev) => prev - 1);
       return;
@@ -85,6 +85,14 @@ export default function usePomodoro(
     if (!concentracion && !descanzo) return;
     setTimeout(reducirTiempo, delay * 1000);
   }, [iniciarC, iniciarD, concentracion, descanzo]);
+
+  useEffect(() => {
+    setConcentracion(tiempos.concentracion);
+  }, [tiempos.concentracion]);
+
+  useEffect(() => {
+    setDescanzo(tiempos.descanzo);
+  }, [tiempos.descanzo]);
 
   return {
     intervalo,

@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { texto } from "../../auxiliar/tiempo";
 
 type Parametros = {
   tiempo: number;
@@ -8,7 +9,9 @@ type Parametros = {
 export default function DCronometro({ ...rest }: Parametros): JSX.Element {
   return (
     <View style={[{ borderColor: rest.color }, estilos.cronometro]}>
-      <Text style={[{ color: rest.color }, estilos.texto]}>{rest.tiempo}</Text>
+      <Text style={[{ color: rest.color }, estilos.texto]}>
+        {texto(rest.tiempo)}
+      </Text>
     </View>
   );
 }

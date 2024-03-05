@@ -9,16 +9,24 @@ import DIniciar from "../components/dumb/DIniciar";
 import SMusica from "../components/smart/SMusica";
 import SDescripcion from "../components/smart/SDescripcion";
 import usePomodoro from "../hook/usePomodoro";
-import SCompletado from "../components/smart/SCompletado";
+import { useConfiguracionContext } from "../context/ConfiguracionContext";
+import { minutosASegundos } from "../auxiliar/tiempo";
 
 export default function Inicio(): JSX.Element {
   const info = useTemaContext();
   const screen = useScreenContext();
-  const crono = usePomodoro(
-    screen.alarmaPausa,
-    screen.alarmaConcent,
-    screen.mostrarCompletado
-  );
+  const config = useConfiguracionContext();
+  const tiemposConfig = {
+    concentracion: minutosASegundos(config.concentracion),
+    descanzo: minutosASegundos(config.descanzo),
+  };
+  const crono = usePomodoro(tiemposConfig, { ...screen });
+  const cronoActual = !crono.concentracion
+    ? crono.descanzo
+    : crono.concentracion;
+  const pressActual = !crono.concentracion
+    ? crono.iniciarDescanzo
+    : crono.iniciarConcentracion;
 
   return (
     <LinearGradient colors={info.tema.fondo} style={estilos.contenedor}>
@@ -29,20 +37,10 @@ export default function Inicio(): JSX.Element {
         estudiar={!!crono.concentracion}
         descanzar={!!crono.descanzo}
       />
-      <DCronometro
-        color={info.tema.texto}
-        tiempo={!crono.concentracion ? crono.descanzo : crono.concentracion}
-      />
+      <DCronometro color={info.tema.texto} tiempo={cronoActual} />
       <View style={estilos.opciones}>
         <SMusica {...crono.musica} color={info.tema.texto} />
-        <DIniciar
-          color={info.tema.texto}
-          press={
-            !crono.concentracion
-              ? crono.iniciarDescanzo
-              : crono.iniciarConcentracion
-          }
-        />
+        <DIniciar color={info.tema.texto} press={pressActual} />
         <DMostrarConfig color={info.tema.texto} press={screen.mostrarConfig} />
       </View>
     </LinearGradient>

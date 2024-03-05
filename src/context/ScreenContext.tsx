@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import useAlarma from "../hook/useAlarma";
 
-type ScreenContext = {
+export type ScreenContext = {
   config: boolean;
   mostrarConfig: () => void;
   sacarConfig: () => void;

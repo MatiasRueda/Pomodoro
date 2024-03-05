@@ -17,7 +17,7 @@ export default function Config(): JSX.Element {
 const estilos = StyleSheet.create({
   contenedor: {
     height: 450,
-    width: 250,
+    width: 300,
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "flex-start",
