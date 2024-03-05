@@ -4,6 +4,7 @@ import Inicio from "./src/screens/Inicio";
 import SConfig from "./src/components/smart/SConfig";
 import ScreenContext from "./src/context/ScreenContext";
 import SAlarma from "./src/components/smart/SAlarma";
+import SCompletado from "./src/components/smart/SCompletado";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Inicio />
         <SConfig />
         <SAlarma />
+        <SCompletado />
       </ScreenContext>
     </TemaContext>
   );

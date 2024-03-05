@@ -7,22 +7,17 @@ import { useScreenContext } from "../context/ScreenContext";
 import DCronometro from "../components/dumb/DCronometro";
 import DIniciar from "../components/dumb/DIniciar";
 import SMusica from "../components/smart/SMusica";
-import useCronometro from "../hook/useCronometro";
 import SDescripcion from "../components/smart/SDescripcion";
-import useMusica from "../hook/useMusica";
+import usePomodoro from "../hook/usePomodoro";
+import SCompletado from "../components/smart/SCompletado";
 
 export default function Inicio(): JSX.Element {
   const info = useTemaContext();
   const screen = useScreenContext();
-  const musica = useMusica();
-  const crono = useCronometro(
-    () => {
-      musica.pausar();
-      screen.mostrarAlarma();
-    },
-    () => {
-      console.log("Termino la pausa");
-    }
+  const crono = usePomodoro(
+    screen.alarmaPausa,
+    screen.alarmaConcent,
+    screen.mostrarCompletado
   );
 
   return (
@@ -39,8 +34,15 @@ export default function Inicio(): JSX.Element {
         tiempo={!crono.concentracion ? crono.descanzo : crono.concentracion}
       />
       <View style={estilos.opciones}>
-        <SMusica {...musica} color={info.tema.texto} />
-        <DIniciar color={info.tema.texto} press={crono.iniciarConcentracion} />
+        <SMusica {...crono.musica} color={info.tema.texto} />
+        <DIniciar
+          color={info.tema.texto}
+          press={
+            !crono.concentracion
+              ? crono.iniciarDescanzo
+              : crono.iniciarConcentracion
+          }
+        />
         <DMostrarConfig color={info.tema.texto} press={screen.mostrarConfig} />
       </View>
     </LinearGradient>

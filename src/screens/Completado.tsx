@@ -1,15 +1,10 @@
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-type Parametros = {
-  texto: string;
-  press: () => void;
-};
-
-export default function Alarma({ ...rest }: Parametros): JSX.Element {
+export default function Completado(props: { press: () => void }): JSX.Element {
   return (
     <View style={estilos.contenedor}>
-      <Text style={estilos.texto}>{rest.texto}</Text>
-      <TouchableOpacity style={estilos.salir} onPress={rest.press}>
+      <Text style={estilos.texto}>Terminaste tu pomodoro</Text>
+      <TouchableOpacity style={estilos.salir} onPress={props.press}>
         <Text style={estilos.textoSalir}>Aceptar</Text>
       </TouchableOpacity>
     </View>

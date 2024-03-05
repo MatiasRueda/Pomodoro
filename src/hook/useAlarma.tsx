@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Audio } from "expo-av";
 
 type UseAlarma = {
@@ -26,6 +26,7 @@ export default function useAlarma(): UseAlarma {
     const estado = await guitarra.current.getStatusAsync();
     if (!estado.isLoaded || !estado.isPlaying) return;
     guitarra.current.pauseAsync();
+    guitarra.current.setPositionAsync(0);
   };
 
   useEffect(() => {

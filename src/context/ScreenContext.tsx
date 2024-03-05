@@ -6,8 +6,12 @@ type ScreenContext = {
   mostrarConfig: () => void;
   sacarConfig: () => void;
   mensajeAlarma?: string;
-  mostrarAlarma: () => void;
+  alarmaPausa: () => void;
+  alarmaConcent: () => void;
   sacarAlarma: () => void;
+  completado: boolean;
+  mostrarCompletado: () => void;
+  sacarCompletado: () => void;
 };
 
 const Screen = createContext<ScreenContext | undefined>(undefined);
@@ -20,25 +24,38 @@ export default function ScreenContext(props: {
   children: ReactNode;
 }): JSX.Element {
   const [config, setConfig] = useState<boolean>(false);
+  const [completado, setCompletado] = useState<boolean>(false);
   const [mensajeAlarma, setMensajeAlarma] = useState<string>();
   const alarma = useAlarma();
 
-  const mostrarAlarma = () => {
+  const alarmaPausa = (): void => {
     setMensajeAlarma("Momento de una pausa");
     alarma.play();
   };
 
-  const sacarAlarma = () => {
+  const alarmaConcent = (): void => {
+    setMensajeAlarma("Momento de volver a concentrarse");
+    alarma.play();
+  };
+
+  const sacarAlarma = (): void => {
     setMensajeAlarma(undefined);
     alarma.pausar();
   };
 
-  const mostrarConfig = () => {
+  const mostrarConfig = (): void => {
     setConfig(true);
   };
 
-  const sacarConfig = () => {
+  const sacarConfig = (): void => {
     setConfig(false);
+  };
+
+  const mostrarCompletado = (): void => {
+    setCompletado(true);
+  };
+  const sacarCompletado = (): void => {
+    setCompletado(false);
   };
 
   return (
@@ -48,8 +65,12 @@ export default function ScreenContext(props: {
         mostrarConfig,
         sacarConfig,
         mensajeAlarma,
-        mostrarAlarma,
+        alarmaPausa,
+        alarmaConcent,
         sacarAlarma,
+        completado,
+        sacarCompletado,
+        mostrarCompletado,
       }}
     >
       {props.children}

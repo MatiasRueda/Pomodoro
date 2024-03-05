@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 type Parametros = {
   press: () => void;
   color: string;
@@ -6,9 +6,9 @@ type Parametros = {
 
 export default function DIniciar({ ...rest }: Parametros): JSX.Element {
   return (
-    <Pressable onPress={rest.press} style={estilos.iniciar}>
+    <TouchableOpacity onPress={rest.press} style={estilos.iniciar}>
       <Text style={[{ color: rest.color }, estilos.texto]}>Iniciar</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
