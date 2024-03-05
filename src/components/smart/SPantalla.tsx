@@ -10,7 +10,7 @@ const estilos = StyleSheet.create({
     height: "100%",
     width: "100%",
     position: "absolute",
-    backgroundColor: "rgba(52, 52, 52, 0.80)",
+    backgroundColor: "rgba(52, 52, 52, 0.60)",
     alignItems: "center",
     justifyContent: "center",
   },

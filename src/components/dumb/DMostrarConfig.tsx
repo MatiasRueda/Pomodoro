@@ -16,7 +16,6 @@ export default function DConfig({ ...rest }: Parametros): JSX.Element {
 
 const estilos = StyleSheet.create({
   contenedor: {
-    width: "15%",
     alignItems: "center",
     justifyContent: "center",
   },
