@@ -17,6 +17,8 @@ const estilos = StyleSheet.create({
   cronometro: {
     height: 250,
     width: 250,
+    marginTop: 50,
+    marginBottom: 50,
     borderRadius: 200,
     borderWidth: 4,
     alignItems: "center",

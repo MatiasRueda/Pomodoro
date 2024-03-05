@@ -1,9 +1,17 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 export default function DConfiguracion(): JSX.Element {
-  return <View></View>;
+  return (
+    <View style={estilos.contenedor}>
+      <Text>Esto es la configuracion</Text>
+    </View>
+  );
 }
 
 const estilos = StyleSheet.create({
-  contendor: {},
+  contenedor: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

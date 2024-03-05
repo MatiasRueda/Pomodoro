@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useScreenContext } from "../context/ScreenContext";
 import DSalir from "../components/dumb/DSalir";
+import DConfiguracion from "../components/dumb/DConfiguracion";
 
 export default function Config(): JSX.Element {
   const screen = useScreenContext();
@@ -8,7 +9,7 @@ export default function Config(): JSX.Element {
   return (
     <View style={estilos.contenedor}>
       <DSalir press={screen.sacarConfig} />
-      <Text>Esto es un menu xD</Text>
+      <DConfiguracion />
     </View>
   );
 }
