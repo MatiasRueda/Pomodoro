@@ -1,16 +1,16 @@
-import { Fragment } from "react";
 import { useScreenContext } from "../../context/ScreenContext";
 import SPantalla from "./SPantalla";
-import Config from "../../screens/Config";
+import { Fragment } from "react";
+import Alarma from "../../screens/Alarma";
 
-export default function SConfig(): JSX.Element {
+export default function SAlarma(): JSX.Element {
   const screen = useScreenContext();
 
   return (
     <Fragment>
-      {screen.config && (
+      {screen.mensajeAlarma && (
         <SPantalla>
-          <Config />
+          <Alarma texto={screen.mensajeAlarma!} press={screen.sacarAlarma} />
         </SPantalla>
       )}
     </Fragment>

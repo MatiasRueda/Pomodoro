@@ -1,12 +1,30 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Fragment } from "react";
-export default function SMusica(props: { color: string }): JSX.Element {
+
+type Parametros = {
+  color: string;
+  musica: boolean;
+  play: () => Promise<void>;
+  pausar: () => Promise<void>;
+};
+
+export default function SMusica({ ...rest }: Parametros): JSX.Element {
   return (
     <Fragment>
-      {true ? (
-        <MaterialIcons name="music-note" size={30} color={props.color} />
+      {rest.musica ? (
+        <MaterialIcons
+          name="music-note"
+          size={30}
+          color={rest.color}
+          onPress={rest.pausar}
+        />
       ) : (
-        <MaterialIcons name="music-off" size={30} color={props.color} />
+        <MaterialIcons
+          name="music-off"
+          size={30}
+          color={rest.color}
+          onPress={rest.play}
+        />
       )}
     </Fragment>
   );
