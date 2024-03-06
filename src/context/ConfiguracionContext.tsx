@@ -10,8 +10,8 @@ type PomoConfig = {
 
 // Tiempos expresados en segundos
 const configuracion: Record<string, Minuto> = {
-  concentracion: { minutos: 0, segundosRestantes: 3 },
-  descanzo: { minutos: 0, segundosRestantes: 2 },
+  concentracion: { minutos: 3, segundosRestantes: 0 },
+  descanzo: { minutos: 2, segundosRestantes: 0 },
 };
 
 const configIntervalo = 3;
