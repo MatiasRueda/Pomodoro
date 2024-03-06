@@ -3,7 +3,10 @@
 ![Static Badge](https://img.shields.io/badge/Estado%20-%20Terminado%20-%20green)
 
 ## Introducción
-Esta app ofrece al usuario una forma más fácil y practica de poder llevar a cabo la técnica pomodoro.
+Esta app ofrece al usuario una forma más fácil y practica de poder llevar a cabo la técnica pomodoro. 
+Como un añadido extra agregue música lofi, una alarma, cambios de tema
+y una configuración simple por si el usuario quiere agregar mas o menos tiempo incluye música.
+
 
 ## Tabla de contenido
 * [Introducción](#Introducción)
