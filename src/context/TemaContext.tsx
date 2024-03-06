@@ -6,13 +6,15 @@ export const temas: Record<string, TemaType> = {
     texto: "#ffffff",
     fondo: ["#bc4e9c", "#f80759"],
   },
+
   blanco: {
     texto: "#000000",
-    fondo: ["#fffffff"],
+    fondo: ["#cccccc", "#d1d1d1"],
   },
+
   negro: {
     texto: "#ffffff",
-    fondo: ["#000000"],
+    fondo: ["#000000", "#4c4c4c"],
   },
 };
 

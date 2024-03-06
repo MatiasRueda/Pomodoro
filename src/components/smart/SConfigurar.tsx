@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text } from "react-native";
 import { useConfiguracionContext } from "../../context/ConfiguracionContext";
-import DTiempo from "./DTiempo";
-import SIntervalo from "../smart/SIntervalo";
+import DTiempo from "../dumb/DTiempo";
+import SIntervalo from "./SIntervalo";
 
 export default function DConfiguracion(): JSX.Element {
   const configuracion = useConfiguracionContext();

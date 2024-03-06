@@ -18,7 +18,8 @@ export default function DTiempo({ ...rest }: Parametros): JSX.Element {
       />
       <Text>:</Text>
       <STiempoPicker
-        maximo={60}
+        minimo={1}
+        maximo={59}
         default={rest.default.segundosRestantes}
         cambiar={rest.cambiar}
       />

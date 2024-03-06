@@ -5,7 +5,8 @@ type Parametros = {
   default: number;
   cambiar: (value: number, minutos?: boolean) => void;
   minutos?: boolean;
-  maximo?: number;
+  minimo?: number;
+  maximo: number;
 };
 
 export default function STiempoPicker({ ...rest }: Parametros): JSX.Element {
@@ -15,9 +16,11 @@ export default function STiempoPicker({ ...rest }: Parametros): JSX.Element {
       selectedValue={rest.default}
       onValueChange={(value) => rest.cambiar(value, rest.minutos)}
     >
-      {range(rest.maximo ? rest.maximo : 61).map((numero) => (
-        <Picker.Item key={numero} label={numero.toString()} value={numero} />
-      ))}
+      {range(rest.maximo)
+        .map((numero) => (rest.minimo ? numero + rest.minimo : numero))
+        .map((numero) => (
+          <Picker.Item key={numero} label={numero.toString()} value={numero} />
+        ))}
     </Picker>
   );
 }
