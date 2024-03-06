@@ -2,8 +2,10 @@ import { useState } from "react";
 import STema from "./STema";
 import SConfigurar from "./SConfigurar";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { useConfiguracionContext } from "../../context/ConfiguracionContext";
 
 export default function SConfiguracion(): JSX.Element {
+  const config = useConfiguracionContext();
   const [temaScreen, setTemaScreen] = useState<boolean>(false);
 
   const mostrarTema = (): void => {
@@ -16,14 +18,16 @@ export default function SConfiguracion(): JSX.Element {
   return (
     <View style={estilos.contenedor}>
       <View style={estilos.opciones}>
-        <TouchableOpacity onPress={sacarTema} style={estilos.opcion}>
-          <Text>Config</Text>
-        </TouchableOpacity>
+        {!config.comenzo && (
+          <TouchableOpacity onPress={sacarTema} style={estilos.opcion}>
+            <Text>Config</Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity onPress={mostrarTema} style={estilos.opcion}>
           <Text>Tema</Text>
         </TouchableOpacity>
       </View>
-      {temaScreen ? <STema /> : <SConfigurar />}
+      {config.comenzo || temaScreen ? <STema /> : <SConfigurar />}
     </View>
   );
 }
@@ -43,6 +47,7 @@ const estilos = StyleSheet.create({
     borderRightWidth: 0,
     borderTopColor: "#000000",
     borderBottomColor: "#000000",
+    justifyContent: "center",
   },
 
   opcion: {

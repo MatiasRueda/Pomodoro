@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { MENSAJE } from "../../auxiliar/mensaje";
 
 type Parametros = {
   color: string;
@@ -13,11 +14,14 @@ export default function SDescripcion({ ...rest }: Parametros): JSX.Element {
     <View style={estilos.contenedor}>
       <Fragment>
         {!rest.iniciar ? (
-          <Text style={[{ color: rest.color }, estilos.texto]}>Bienvenido</Text>
+          <Text style={[{ color: rest.color }, estilos.texto]}>
+            {MENSAJE.BIENVENIDA}
+          </Text>
         ) : (
           <Text style={[{ color: rest.color }, estilos.texto]}>
-            {rest.estudiar && "Momento de concentrarse"}
-            {rest.descanzar && "Momento de descanzar"}
+            {rest.estudiar && MENSAJE.ESTUDIAR}
+            {rest.descanzar && MENSAJE.DESCANZAR}
+            {!rest.estudiar && !rest.descanzar && MENSAJE.PREPARACION}
           </Text>
         )}
       </Fragment>

@@ -16,7 +16,7 @@ export default function SControlCrono({ ...rest }: Parametros): JSX.Element {
       {!rest.comenzo ? (
         <DBoton press={rest.press} color={rest.color} texto={"Iniciar"} />
       ) : rest.pausado ? (
-        <DBoton press={rest.despausar} texto="Despausar" color={rest.color} />
+        <DBoton press={rest.despausar} texto="Reanudar" color={rest.color} />
       ) : (
         <DBoton press={rest.pausar} texto="Pausar" color={rest.color} />
       )}

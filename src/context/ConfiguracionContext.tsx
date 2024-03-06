@@ -1,5 +1,12 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { Minuto } from "../types/type";
+import { minutosASegundos } from "../auxiliar/tiempo";
+
+type PomoConfig = {
+  concent: number;
+  descanzo: number;
+  intervalos: number;
+};
 
 // Tiempos expresados en segundos
 const configuracion: Record<string, Minuto> = {
@@ -10,20 +17,22 @@ const configuracion: Record<string, Minuto> = {
 const configIntervalo = 3;
 
 export type ConfiguracionContext = {
+  comenzo: boolean;
   concentracion: Minuto;
   descanzo: Minuto;
   intervalo: number;
   cambiarConcentracion: (nuevaConcentracion: number, minuto?: boolean) => void;
   cambiarDescanzo: (nuevoDescanzo: number, minuto?: boolean) => void;
   cambiarIntervalo: (nuevoIntervalo: number) => void;
+  siComenzo: () => void;
+  noComenzo: () => void;
+  pomo: PomoConfig;
 };
 
-const Configuracion = createContext<ConfiguracionContext | undefined>(
-  undefined
-);
+const Config = createContext<ConfiguracionContext | undefined>(undefined);
 
 export function useConfiguracionContext(): ConfiguracionContext {
-  return useContext(Configuracion)!;
+  return useContext(Config)!;
 }
 
 export default function ConfiguracionContext(props: {
@@ -32,6 +41,7 @@ export default function ConfiguracionContext(props: {
   const [concentracion, setConcentracion] = useState<Minuto>(
     configuracion.concentracion
   );
+  const [comenzo, setComenzo] = useState<boolean>(false);
   const [descanzo, setDescanzo] = useState<Minuto>(configuracion.descanzo);
   const [intervalo, setIntervalo] = useState<number>(configIntervalo);
   const cambiarConcentracion = (
@@ -49,6 +59,14 @@ export default function ConfiguracionContext(props: {
     setIntervalo(nuevoIntervalo);
   };
 
+  const siComenzo = (): void => {
+    setComenzo(true);
+  };
+
+  const noComenzo = (): void => {
+    setComenzo(false);
+  };
+
   const cambiarDescanzo = (nuevoDescanzo: number, minuto?: boolean) => {
     setDescanzo(
       minuto
@@ -58,17 +76,25 @@ export default function ConfiguracionContext(props: {
   };
 
   return (
-    <Configuracion.Provider
+    <Config.Provider
       value={{
+        comenzo,
         concentracion,
         descanzo,
         intervalo,
         cambiarConcentracion,
         cambiarDescanzo,
         cambiarIntervalo,
+        siComenzo,
+        noComenzo,
+        pomo: {
+          concent: minutosASegundos(concentracion),
+          descanzo: minutosASegundos(descanzo),
+          intervalos: intervalo,
+        },
       }}
     >
       {props.children}
-    </Configuracion.Provider>
+    </Config.Provider>
   );
 }

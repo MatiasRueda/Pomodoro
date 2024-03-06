@@ -9,26 +9,23 @@ import SMusica from "../components/smart/SMusica";
 import SDescripcion from "../components/smart/SDescripcion";
 import usePomodoro from "../hook/usePomodoro";
 import { useConfiguracionContext } from "../context/ConfiguracionContext";
-import { minutosASegundos } from "../auxiliar/tiempo";
 import SControlCrono from "../components/smart/SControlCrono";
 
 export default function Inicio(): JSX.Element {
   const info = useTemaContext();
   const screen = useScreenContext();
   const config = useConfiguracionContext();
-  const tiemposConfig = {
-    concentracion: minutosASegundos(config.concentracion),
-    descanzo: minutosASegundos(config.descanzo),
-    intervalos: config.intervalo,
-  };
-  const crono = usePomodoro(tiemposConfig, { ...screen });
-  const cronoActual = !crono.concentracion
-    ? crono.descanzo
-    : crono.concentracion;
+  const crono = usePomodoro(config.pomo, { ...screen });
+  const cronoActual = !crono.concent ? crono.descanzo : crono.concent;
 
-  const pressActual = !crono.concentracion
+  const pressActual = !crono.concent
     ? crono.iniciarDescanzo
     : crono.iniciarConcentracion;
+
+  const mostrarConfig = (): void => {
+    screen.mostrarConfig();
+    crono.comenzo ? config.siComenzo() : config.noComenzo();
+  };
 
   return (
     <LinearGradient colors={info.tema.fondo} style={estilos.contenedor}>
@@ -38,7 +35,7 @@ export default function Inicio(): JSX.Element {
       </Text>
       <SDescripcion
         color={info.tema.texto}
-        iniciar={crono.iniciarC || crono.iniciarD}
+        iniciar={crono.comenzo}
         estudiar={crono.iniciarC}
         descanzar={crono.iniciarD}
       />
@@ -53,7 +50,7 @@ export default function Inicio(): JSX.Element {
           despausar={crono.despausar}
           comenzo={crono.iniciarC || crono.iniciarD}
         />
-        <DMostrarConfig color={info.tema.texto} press={screen.mostrarConfig} />
+        <DMostrarConfig color={info.tema.texto} press={mostrarConfig} />
       </View>
     </LinearGradient>
   );

@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import useAlarma from "../hook/useAlarma";
+import { MENSAJE } from "../auxiliar/mensaje";
 
 export type ScreenContext = {
   config: boolean;
@@ -29,12 +30,12 @@ export default function ScreenContext(props: {
   const alarma = useAlarma();
 
   const alarmaPausa = (): void => {
-    setMensajeAlarma("Momento de una pausa");
+    setMensajeAlarma(MENSAJE.PAUSA);
     alarma.play();
   };
 
   const alarmaConcent = (): void => {
-    setMensajeAlarma("Momento de volver a concentrarse");
+    setMensajeAlarma(MENSAJE.CONCENT);
     alarma.play();
   };
 
