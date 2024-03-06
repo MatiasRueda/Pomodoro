@@ -17,41 +17,56 @@ type UseCronometro = {
   iniciarConcentracion: () => void;
   iniciarDescanzo: () => void;
   musica: UseMusica;
+  pausado: boolean;
+  pausar: () => void;
+  despausar: () => void;
 };
 
 const delay: number = 1;
 
 export default function usePomodoro(
-  tiempos: { concentracion: number; descanzo: number },
+  config: { concentracion: number; descanzo: number; intervalos: number },
   screen: ScreenContext
 ): UseCronometro {
+  const [pausado, setPausado] = useState<boolean>(true);
   const [iniciarC, setIniciarC] = useState<boolean>(false);
   const [iniciarD, setIniciarD] = useState<boolean>(false);
   const [concentracion, setConcentracion] = useState<number>(
-    tiempos.concentracion
+    config.concentracion
   );
-  const [descanzo, setDescanzo] = useState<number>(tiempos.descanzo);
-  const [intervalo, setIntervalo] = useState<number>(2);
+  const [descanzo, setDescanzo] = useState<number>(config.descanzo);
+  const [intervalo, setIntervalo] = useState<number>(config.intervalos);
   const musica = useMusica();
 
   const iniciarConcentracion = (): void => {
     setIniciarC(true);
+    setPausado(false);
+  };
+
+  const pausar = (): void => {
+    setPausado(true);
+  };
+
+  const despausar = (): void => {
+    setPausado(false);
   };
 
   const iniciarDescanzo = (): void => {
     setIniciarD(true);
+    setPausado(false);
   };
 
   const reiniciar = (): void => {
     setIniciarC(false);
     setIniciarD(false);
-    setConcentracion(tiempos.concentracion);
-    setDescanzo(tiempos.descanzo);
+    setPausado(false);
+    setConcentracion(config.concentracion);
+    setDescanzo(config.descanzo);
   };
 
   const reiniciarTodo = (): void => {
     reiniciar();
-    setIntervalo(2);
+    setIntervalo(config.intervalos);
   };
 
   const reducirTiempo = (): void => {
@@ -65,10 +80,11 @@ export default function usePomodoro(
   };
 
   useEffect(() => {
-    if (!iniciarC || !intervalo) return;
+    if ((!iniciarC && !iniciarD) || !intervalo || pausado) return;
     if (!concentracion && !iniciarD) {
       screen.alarmaPausa();
       pararMusica();
+      setIniciarC(false);
       return;
     }
     if (!descanzo) {
@@ -79,20 +95,25 @@ export default function usePomodoro(
       }
       screen.alarmaConcent();
       reiniciar();
+      setIniciarD(false);
       setIntervalo((prev) => prev - 1);
       return;
     }
     if (!concentracion && !descanzo) return;
     setTimeout(reducirTiempo, delay * 1000);
-  }, [iniciarC, iniciarD, concentracion, descanzo]);
+  }, [iniciarC, iniciarD, concentracion, descanzo, pausado]);
 
   useEffect(() => {
-    setConcentracion(tiempos.concentracion);
-  }, [tiempos.concentracion]);
+    setConcentracion(config.concentracion);
+  }, [config.concentracion]);
 
   useEffect(() => {
-    setDescanzo(tiempos.descanzo);
-  }, [tiempos.descanzo]);
+    setDescanzo(config.descanzo);
+  }, [config.descanzo]);
+
+  useEffect(() => {
+    setIntervalo(config.intervalos);
+  }, [config.intervalos]);
 
   return {
     intervalo,
@@ -103,5 +124,8 @@ export default function usePomodoro(
     iniciarConcentracion,
     iniciarDescanzo,
     musica,
+    despausar,
+    pausar,
+    pausado,
   };
 }

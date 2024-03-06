@@ -1,7 +1,7 @@
 import { Minuto } from "../types/type";
 
 export function segundosAMinutos(segundos: number): Minuto {
-  const minutos: number = Math.round(segundos / 60);
+  const minutos: number = Math.floor(segundos / 60);
   const segundosRestantes: number = segundos % 60;
   return { minutos, segundosRestantes };
 }

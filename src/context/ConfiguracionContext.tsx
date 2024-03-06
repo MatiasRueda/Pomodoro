@@ -7,11 +7,15 @@ const configuracion: Record<string, Minuto> = {
   descanzo: { minutos: 1, segundosRestantes: 0 },
 };
 
+const configIntervalo = 3;
+
 export type ConfiguracionContext = {
   concentracion: Minuto;
   descanzo: Minuto;
+  intervalo: number;
   cambiarConcentracion: (nuevaConcentracion: number, minuto?: boolean) => void;
   cambiarDescanzo: (nuevoDescanzo: number, minuto?: boolean) => void;
+  cambiarIntervalo: (nuevoIntervalo: number) => void;
 };
 
 const Configuracion = createContext<ConfiguracionContext | undefined>(
@@ -29,7 +33,7 @@ export default function ConfiguracionContext(props: {
     configuracion.concentracion
   );
   const [descanzo, setDescanzo] = useState<Minuto>(configuracion.descanzo);
-
+  const [intervalo, setIntervalo] = useState<number>(configIntervalo);
   const cambiarConcentracion = (
     nuevaConcentracion: number,
     minuto?: boolean
@@ -39,6 +43,10 @@ export default function ConfiguracionContext(props: {
         ? { ...concentracion, minutos: nuevaConcentracion }
         : { ...concentracion, segundosRestantes: nuevaConcentracion }
     );
+  };
+
+  const cambiarIntervalo = (nuevoIntervalo: number) => {
+    setIntervalo(nuevoIntervalo);
   };
 
   const cambiarDescanzo = (nuevoDescanzo: number, minuto?: boolean) => {
@@ -54,8 +62,10 @@ export default function ConfiguracionContext(props: {
       value={{
         concentracion,
         descanzo,
+        intervalo,
         cambiarConcentracion,
         cambiarDescanzo,
+        cambiarIntervalo,
       }}
     >
       {props.children}

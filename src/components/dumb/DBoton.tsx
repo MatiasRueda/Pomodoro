@@ -1,13 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 type Parametros = {
+  texto: string;
   press: () => void;
   color: string;
 };
 
-export default function DIniciar({ ...rest }: Parametros): JSX.Element {
+export default function DBoton({ ...rest }: Parametros): JSX.Element {
   return (
     <TouchableOpacity onPress={rest.press} style={estilos.iniciar}>
-      <Text style={[{ color: rest.color }, estilos.texto]}>Iniciar</Text>
+      <Text style={[{ color: rest.color }, estilos.texto]}>{rest.texto}</Text>
     </TouchableOpacity>
   );
 }
