@@ -26,25 +26,28 @@ export default function Inicio(): JSX.Element {
     ? crono.descanzo
     : crono.concentracion;
 
+  const pressActual = !crono.concentracion
+    ? crono.iniciarDescanzo
+    : crono.iniciarConcentracion;
+
   return (
     <LinearGradient colors={info.tema.fondo} style={estilos.contenedor}>
       <Text style={[{ color: info.tema.texto }, estilos.texto]}>Pomodoro</Text>
+      <Text style={[{ color: info.tema.texto }, estilos.textoIntervalos]}>
+        Intervalos restantes: {crono.intervalo}
+      </Text>
       <SDescripcion
         color={info.tema.texto}
-        iniciar={crono.iniciarC}
-        estudiar={!!crono.concentracion}
-        descanzar={!!crono.descanzo}
+        iniciar={crono.iniciarC || crono.iniciarD}
+        estudiar={crono.iniciarC}
+        descanzar={crono.iniciarD}
       />
       <DCronometro color={info.tema.texto} tiempo={cronoActual} />
       <View style={estilos.opciones}>
         <SMusica {...crono.musica} color={info.tema.texto} />
         <SControlCrono
           color={info.tema.texto}
-          press={
-            !crono.concentracion
-              ? crono.iniciarDescanzo
-              : crono.iniciarConcentracion
-          }
+          press={pressActual}
           pausado={crono.pausado}
           pausar={crono.pausar}
           despausar={crono.despausar}
@@ -73,5 +76,12 @@ const estilos = StyleSheet.create({
     width: "100%",
     textAlign: "center",
     fontSize: 35,
+  },
+
+  textoIntervalos: {
+    marginTop: 20,
+    width: "100%",
+    textAlign: "center",
+    fontSize: 20,
   },
 });

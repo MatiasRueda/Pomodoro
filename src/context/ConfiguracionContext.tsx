@@ -3,8 +3,8 @@ import { Minuto } from "../types/type";
 
 // Tiempos expresados en segundos
 const configuracion: Record<string, Minuto> = {
-  concentracion: { minutos: 2, segundosRestantes: 0 },
-  descanzo: { minutos: 1, segundosRestantes: 0 },
+  concentracion: { minutos: 0, segundosRestantes: 3 },
+  descanzo: { minutos: 0, segundosRestantes: 2 },
 };
 
 const configIntervalo = 3;

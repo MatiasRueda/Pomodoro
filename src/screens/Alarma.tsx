@@ -20,6 +20,7 @@ const estilos = StyleSheet.create({
   contenedor: {
     height: 225,
     width: 300,
+    borderRadius: 20,
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",

@@ -16,7 +16,8 @@ export default function SDescripcion({ ...rest }: Parametros): JSX.Element {
           <Text style={[{ color: rest.color }, estilos.texto]}>Bienvenido</Text>
         ) : (
           <Text style={[{ color: rest.color }, estilos.texto]}>
-            {rest.estudiar ? "Momento de concentrarse" : "Momento de descanzar"}
+            {rest.estudiar && "Momento de concentrarse"}
+            {rest.descanzar && "Momento de descanzar"}
           </Text>
         )}
       </Fragment>
